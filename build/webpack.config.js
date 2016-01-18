@@ -1,13 +1,13 @@
-import webpack from 'webpack'
-import cssnano from 'cssnano'
-import _debug from 'debug'
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
-import writeStats from './plugins/write_stats'
-import config from '../config'
+import webpack from 'webpack';
+import cssnano from 'cssnano';
+import _debug from 'debug';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import writeStats from './plugins/write_stats';
+import config from '../config';
 
-const debug = _debug('app:webpack:config')
-const paths = config.utils_paths
-const {__DEV__, __PROD__, __TEST__} = config.globals
+const debug = _debug('app:webpack:config');
+const paths = config.utils_paths;
+const {__DEV__, __PROD__, __TEST__} = config.globals;
 
 const webpackConfig = {
   name: 'client',
@@ -44,11 +44,11 @@ webpackConfig.output = {
 webpackConfig.plugins = [
   new webpack.DefinePlugin(config.globals),
   new webpack.optimize.OccurrenceOrderPlugin(),
-  new webpack.optimize.DedupePlugin(),
+  new webpack.optimize.DedupePlugin()
 ];
 
 if (__DEV__) {
-  debug('Enable plugins for live development (HMR, NoErrors).')
+  debug('Enable plugins for live development (HMR, NoErrors).');
   webpackConfig.plugins.push(
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
@@ -101,11 +101,10 @@ webpackConfig.module.loaders = [{
       ? ['es2015', 'react', 'stage-0', 'react-hmre']
       : ['es2015', 'react', 'stage-0']
   }
-},
-  {
-    test: /\.json$/,
-    loader: 'json'
-  }];
+}, {
+  test: /\.json$/,
+  loader: 'json'
+}];
 
 // Styles
 const cssLoader = !config.compiler_css_modules
@@ -152,7 +151,7 @@ webpackConfig.module.loaders.push({
 });
 
 webpackConfig.sassLoader = {
-  includePaths: paths.client('styles')
+  includePaths: paths.src('styles')
 };
 
 webpackConfig.postcss = [

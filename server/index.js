@@ -9,13 +9,16 @@ import webpackConfig from '../build/webpack.config';
 
 import React from 'react';
 import { renderToString } from 'react-dom/server';
+// import { Provider } from 'react-redux';
+
+import Html from './../src/helpers/Html';
+import Root from './../src/containers/Root';
+import configureStore from '../src/redux/configureStore';
+import { createMemoryHistory } from 'react-router';
 import { Provider } from 'react-redux';
-
-import configureStore from '../src/stores/configureStore';
-import App from '../src/containers/App';
-import { fetchCounter } from '../src/api/counter';
-
-import webpackStats from './webpack_stats.json';
+import routes from './../src/routes';
+// import App from '../src/containers/App';
+// import { fetchCounter } from '../src/api/counter';
 
 const debug = _debug('app:server');
 const paths = config.utils_paths;
@@ -37,7 +40,7 @@ if (config.env === 'development') {
   // these files. This middleware doesn't need to be enabled outside
   // of development since this directory will be copied into ~/dist
   // when the application is compiled.
-  app.use(Express.static(paths.client('static')));
+  // app.use(Express.static(paths.client('static')));
 } else {
   debug(
     'Server is being run outside of live development mode. This starter kit ' +
@@ -55,52 +58,23 @@ if (config.env === 'development') {
 app.use(handleRender);
 
 function handleRender(req, res) {
-  // Query our mock API asynchronously
-  fetchCounter(apiResult => {
-    // Read the counter from the request, if provided
-    const params = qs.parse(req.query);
-    const counter = parseInt(params.counter, 10) || apiResult || 0;
+  var webpackStats = require('./webpack_stats.json');
+  // const historyConfig = {
+  //   basename: ''
+  // };
+  // debug('handleRender', useRouterHistory);
+  const history = createMemoryHistory();
+  const initialState = {};
+  const store = configureStore({});
+  const component = (
+    <Root history={history} routes={routes} store={store} />
+  );
 
-    // Compile an initial state
-    const initialState = {
-      counter
-    };
-
-    // Create a new Redux store instance
-    const store = configureStore(initialState);
-
-    // Render the component to a string
-    const html = renderToString(
-      <Provider store={store}>
-        <App />
-      </Provider>
-    );
-
-    // Grab the initial state from our Redux store
-    const finalState = store.getState();
-
-    // Send the rendered page back to the client
-    res.send(renderFullPage(html, finalState));
-  });
-}
-
-function renderFullPage(html, initialState) {
-  return `
-    <!doctype html>
-    <html>
-      <head>
-        <title>Redux Universal Example</title>
-      </head>
-      <body>
-        <div id="app">${html}</div>
-        <script>
-          window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
-        </script>
-        <script src="${webpackStats.vendor}"></script>
-        <script src="${webpackStats.script}"></script>
-      </body>
-    </html>
-    `;
+  res.send('<!doctype html>\n' +
+    renderToString(<Html assets={{
+      styles: webpackStats.css,
+      javascript: [webpackStats.vendor[0], webpackStats.script[0]]
+    }} component={component} store={store}/>));
 }
 
 export default app;

@@ -11,6 +11,7 @@ const config = {
   // Project Structure
   // ----------------------------------
   path_base  : path.resolve(__dirname, '../'),
+  dir_src    : 'src',
   dir_client : 'client',
   dir_dist   : 'dist',
   dir_server : 'server',
@@ -74,6 +75,7 @@ config.globals = {
   '__PROD__'     : config.env === 'production',
   '__TEST__'     : config.env === 'test',
   '__DEBUG__'    : config.env === 'development' && !argv.no_debug,
+  '__CLIENT__'   : true,
   '__DEBUG_NEW_WINDOW__' : !!argv.nw,
   '__BASENAME__' : JSON.stringify(process.env.BASENAME || '')
 };
@@ -105,6 +107,7 @@ config.utils_paths = (() => {
 
   return {
     base   : base,
+    src    : base.bind(null, config.dir_src),
     client : base.bind(null, config.dir_client),
     dist   : base.bind(null, config.dir_dist)
   };
