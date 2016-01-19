@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "DEBUG=app:* BLUEBIRD_WARNINGS=0 NODE_ENV=development node bin/server.js"
+    "dev": "DEBUG=app:* BLUEBIRD_WARNINGS=0 NODE_ENV=development node bin/server.js",
+    "compile": "node ./bin/compile"
   },
   "repository": {
     "type": "git",
@@ -27,7 +28,9 @@
     "express-session": "^1.13.0",
     "file-loader": "^0.8.5",
     "history": "^1.17.0",
+    "lodash": "^4.0.0",
     "multireducer": "^1.0.2",
+    "pretty-error": "^2.0.0",
     "qs": "^6.0.1",
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
@@ -36,9 +39,11 @@
     "react-router": "^2.0.0-rc5",
     "redux": "^3.0.5",
     "redux-actions": "^0.9.0",
+    "redux-logger": "^2.3.2",
     "redux-simple-router": "^2.0.3",
     "redux-thunk": "^1.0.3",
     "serialize-javascript": "^1.1.2",
+    "webpack-isomorphic-tools": "^2.2.26",
     "yargs": "^3.31.0"
   },
   "devDependencies": {

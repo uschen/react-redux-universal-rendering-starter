@@ -34,6 +34,8 @@ export const doubleAsync = () => {
 
 export const actions = {
   increment,
+  set,
+  decrement,
   doubleAsync
 };
 
@@ -43,5 +45,5 @@ export const actions = {
 export default handleActions({
   [COUNTER_INCREMENT]: (state, {payload}) => state + payload,
   [COUNTER_DECREMENT]: (state, {payload}) => state - payload,
-  [COUNTER_SET]: (state, {payload}) => payload,
+  [COUNTER_SET]: (state, {payload}) => payload
 }, 1);

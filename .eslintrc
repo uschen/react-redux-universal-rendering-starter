@@ -13,7 +13,9 @@
     "__DEBUG__"    : false,
     "__DEBUG_NEW_WINDOW__" : false,
     "__BASENAME__" : false,
-    "__CLIENT__": false
+    "__CLIENT__": false,
+    "__LOGGER__": false,
+    "__DEVTOOLS__": false,
   },
   "rules": {
     "semi" : [2, "always"],

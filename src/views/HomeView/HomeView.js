@@ -2,10 +2,10 @@ import React, { PropTypes , Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { actions as counterActions } from '../../redux/modules/counter';
-// import DuckImage from './Duck.jpg';
-const DuckImage = '';
-// import classes from './HomeView.scss';
-const classes = {};
+import DuckImage from './Duck.jpg';
+// const DuckImage = '';
+import classes from './HomeView.scss';
+// const classes = {};
 // We define mapStateToProps where we'd normally use
 // the @connect decorator so the data requirements are clear upfront, but then
 // export the decorated component after the main class definition so
@@ -31,7 +31,7 @@ export class HomeView extends Component {
                  alt='This is a duck, because Redux.' />
           </div>
         </div>
-        <h1>Welcome to the React Redux Starter Kit2 </h1>
+        <h1>Welcome to the React Redux Starter Kit 8 DEV: {JSON.stringify(__DEV__)} </h1>
         <h2>
           Sample Counter:&nbsp;
           <span className={classes['counter--green']}>{this.props.counter}</span>

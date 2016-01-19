@@ -38,6 +38,7 @@ const config = {
     colors : true
   },
   compiler_vendor : [
+    'history',
     'react',
     'react-redux',
     'react-router',
@@ -77,7 +78,8 @@ config.globals = {
   '__DEBUG__'    : config.env === 'development' && !argv.no_debug,
   '__CLIENT__'   : true,
   '__DEBUG_NEW_WINDOW__' : !!argv.nw,
-  '__BASENAME__' : JSON.stringify(process.env.BASENAME || '')
+  '__BASENAME__' : JSON.stringify(process.env.BASENAME || ''),
+  '__LOGGER__'   : false
 };
 
 // ------------------------------------

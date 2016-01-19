@@ -2,16 +2,20 @@ import webpack from 'webpack';
 import cssnano from 'cssnano';
 import _debug from 'debug';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin';
 import writeStats from './plugins/write_stats';
 import config from '../config';
 
 const debug = _debug('app:webpack:config');
 const paths = config.utils_paths;
 const {__DEV__, __PROD__, __TEST__} = config.globals;
+const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('./../server/webpack-isomorphic-tools.config.js'));
 
+debug('context', config.path_base);
 const webpackConfig = {
+  context: config.path_base,
   name: 'client',
-  target: 'web',
+  // target: 'web',
   devtool: 'source-map',
   resolve: {
     root: paths.base(config.dir_client),
@@ -34,6 +38,7 @@ webpackConfig.entry = {
 // ------------------------------------
 webpackConfig.output = {
   filename: `[name].[${config.compiler_hash_type}].js`,
+  chunkFilename: '[name]-[chunkhash].js',
   path: paths.base(config.dir_dist),
   publicPath: config.compiler_public_path
 };
@@ -174,15 +179,15 @@ webpackConfig.postcss = [
 webpackConfig.module.loaders.push(
   {
     test: /\.woff(\?.*)?$/,
-    loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/font-woff'
+    loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10&mimetype=application/font-woff'
   },
   {
     test: /\.woff2(\?.*)?$/,
-    loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/font-woff2'
+    loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10&mimetype=application/font-woff2'
   },
   {
     test: /\.ttf(\?.*)?$/,
-    loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/octet-stream'
+    loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10&mimetype=application/octet-stream'
   },
   {
     test: /\.eot(\?.*)?$/,
@@ -190,11 +195,11 @@ webpackConfig.module.loaders.push(
   },
   {
     test: /\.svg(\?.*)?$/,
-    loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=image/svg+xml'
+    loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10&mimetype=image/svg+xml'
   },
   {
-    test: /\.(png|jpg)$/,
-    loader: 'url?limit=8192'
+    test: webpackIsomorphicToolsPlugin.regular_expression('images'),
+    loader: 'url-loader?limit=10240'
   }
 )
 /* eslint-enable */
@@ -221,10 +226,12 @@ if (!__DEV__) {
   );
 }
 
-webpackConfig.plugins.push(
-  function() {
-    this.plugin('done', writeStats);
-  }
-);
+// webpackConfig.plugins.push(
+//   function() {
+//     this.plugin('done', writeStats);
+//   }
+// );
 
-export default webpackConfig
+webpackConfig.plugins.push(webpackIsomorphicToolsPlugin.development());
+
+export default webpackConfig;

@@ -1,25 +1,50 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { useRouterHistory } from 'react-router';
+import { Provider } from 'react-redux';
+import { Router, browserHistory } from 'react-router';
 import { createHistory } from 'history';
 import routes from './../src/routes';
 import Root from './../src/containers/Root';
 import configureStore from '../src/redux/configureStore';
 // import App from '../src/containers/App';
-
-const historyConfig = {
-  basename: __BASENAME__
-};
-const history = useRouterHistory(createHistory)(historyConfig);
-
 const initialState = window.__INITIAL_STATE__;
-const store = configureStore({
-  initialState,
-  history
-});
+const destEle = document.getElementById('content');
+const store = configureStore(browserHistory, initialState);
 
-// Render the React application to the DOM
-ReactDOM.render(
-  <Root history={history} routes={routes} store={store} />,
-  document.getElementById('root')
+function clientRender(component, store, dest) {
+  if (__DEBUG__ && !window.devToolsExtension) {
+    const Tools = require('./../src/containers/DevTools').default;
+    ReactDOM.render(
+      <Provider store={store} key='provider'>
+        <div>
+          {component}
+          <Tools />
+        </div>
+      </Provider>,
+      dest
+    );
+  }
+}
+
+const component = (
+  <Router history={browserHistory}>
+    {routes}
+  </Router>
 );
+
+// ReactDOM.render(
+//   <Provider store={store} key="provider">
+//     {component}
+//   </Provider>,
+//   destEle
+// );
+
+if (process.env.NODE_ENV !== 'production') {
+  window.React = React; // enable debugger
+
+  if (!destEle || !destEle.firstChild || !destEle.firstChild.attributes || !destEle.firstChild.attributes['data-react-checksum']) {
+    console.error('Server-side React render was discarded. Make sure that your initial render does not contain any client-side code.');
+  }
+}
+
+clientRender(component, store, destEle);

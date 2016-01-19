@@ -17,6 +17,7 @@ function writeStats(stats) {
   const publicPath = this.options.output.publicPath;
 
   const json = stats.toJson();
+  console.log(json);
 
   // get chunks by name and extensions
   function getChunks(name, ext) {

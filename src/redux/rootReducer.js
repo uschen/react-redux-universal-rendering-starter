@@ -3,6 +3,6 @@ import { routeReducer as router } from 'redux-simple-router';
 import counter from './modules/counter';
 
 export default combineReducers({
-  counter,
-  router
+  router,
+  counter
 });

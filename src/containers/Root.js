@@ -17,21 +17,6 @@ export default class Root extends React.Component {
     );
   }
 
-  get devTools () {
-    if (__DEBUG__ && __CLIENT__) {
-      if (__DEBUG_NEW_WINDOW__) {
-        if (!window.devToolsExtension) {
-          require('../redux/utils/createDevToolsWindow').default(this.props.store);
-        } else {
-          window.devToolsExtension.open();
-        }
-      } else if (!window.devToolsExtension) {
-        const DevTools = require('./DevTools').default;
-        return <DevTools />;
-      }
-    }
-  }
-
   render () {
     return (
       <Provider store={this.props.store}>
