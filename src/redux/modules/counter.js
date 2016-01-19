@@ -15,7 +15,7 @@ export const COUNTER_DECREMENT = 'COUNTER_DECREMENT';
 // ------------------------------------
 export const increment = createAction(COUNTER_INCREMENT, (value = 1) => value);
 export const set = createAction(COUNTER_SET, (value) => value);
-export const decrement = createAction(COUNTER_DECREMENT, (value = 0) => value);
+export const decrement = createAction(COUNTER_DECREMENT, (value = 1) => value);
 
 // This is a thunk, meaning it is a function that immediately
 // returns a function for lazy evaluation. It is incredibly useful for

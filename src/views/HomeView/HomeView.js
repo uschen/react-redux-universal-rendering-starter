@@ -1,4 +1,4 @@
-import React, { PropTypes , Component } from 'react';
+import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { actions as counterActions } from '../../redux/modules/counter';
@@ -18,10 +18,11 @@ export class HomeView extends Component {
   static propTypes = {
     counter: PropTypes.number.isRequired,
     doubleAsync: PropTypes.func.isRequired,
-    increment: PropTypes.func.isRequired
+    increment: PropTypes.func.isRequired,
+    decrement: PropTypes.func.isRequired
   };
 
-  render () {
+  render() {
     return (
       <div className='container text-center'>
         <div className='row'>
@@ -43,6 +44,10 @@ export class HomeView extends Component {
         <button className='btn btn-default'
                 onClick={this.props.doubleAsync}>
           Double (Async)
+        </button>
+        <button className='btn btn-default'
+                onClick={() => this.props.decrement(1)}>
+          Decrement
         </button>
         <hr />
         <Link to='/404'>Go to 404 Page</Link>

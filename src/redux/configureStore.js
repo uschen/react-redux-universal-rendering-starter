@@ -1,9 +1,9 @@
 import thunk from 'redux-thunk';
-import { map } from 'lodash';
+// import { map } from 'lodash';
 import rootReducer from './rootReducer';
 import { applyMiddleware, compose, createStore } from 'redux';
 import { syncHistory } from 'redux-simple-router';
-import createLogger from 'redux-logger';
+// import createLogger from 'redux-logger';
 
 function hmr(store) {
   if (module.hot) {
@@ -23,9 +23,9 @@ function withDevTools(middlewares) {
 
 // context: https://github.com/rackt/redux-simple-router/compare/1.0.2...2.0.2
 // context: https://github.com/rackt/redux-simple-router/pull/141#issuecomment-167587581
-function linkDevtoolsToRouter(routerMiddleware, store) {
-  routerMiddleware.listenForReplays(store);
-}
+// function linkDevtoolsToRouter(routerMiddleware, store) {
+//   routerMiddleware.listenForReplays(store);
+// }
 
 /**
  * https://github.com/bdefore/universal-redux/blob/master/src/shared/create.js
