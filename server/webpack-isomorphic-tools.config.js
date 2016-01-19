@@ -10,7 +10,7 @@ module.exports = {
   // [0] npm run start-prod exited with code 1
   // Sending SIGTERM to other processes..
   //
-  debug: true,
+  // debug: true,
 
   assets: {
     images: {

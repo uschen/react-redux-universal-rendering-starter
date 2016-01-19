@@ -40,6 +40,7 @@ export default function handleRender(req, res) {
     routes,
     location: req.originalUrl
   }, (error, redirectLocation, renderProps) => {
+
     if (redirectLocation) {
       res.redirect(redirectLocation.pathname + redirectLocation.search);
     } else if (error) {

@@ -31,7 +31,7 @@ export class HomeView extends Component {
                  alt='This is a duck, because Redux.' />
           </div>
         </div>
-        <h1>Welcome to the React Redux Starter Kit 8 DEV: {JSON.stringify(__DEV__)} </h1>
+        <h1>Welcome to the React Redux Starter Kit 8</h1>
         <h2>
           Sample Counter:&nbsp;
           <span className={classes['counter--green']}>{this.props.counter}</span>

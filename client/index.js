@@ -13,12 +13,12 @@ const store = configureStore(browserHistory, initialState);
 
 function clientRender(component, store, dest) {
   if (__DEBUG__ && !window.devToolsExtension) {
-    const Tools = require('./../src/containers/DevTools').default;
+    const DevTools = require('./../src/containers/DevTools').default;
     ReactDOM.render(
       <Provider store={store} key='provider'>
         <div>
           {component}
-          <Tools />
+          <DevTools />
         </div>
       </Provider>,
       dest
@@ -32,12 +32,12 @@ const component = (
   </Router>
 );
 
-// ReactDOM.render(
-//   <Provider store={store} key="provider">
-//     {component}
-//   </Provider>,
-//   destEle
-// );
+ReactDOM.render(
+  <Provider store={store} key='provider'>
+    {component}
+  </Provider>,
+  destEle
+);
 
 if (process.env.NODE_ENV !== 'production') {
   window.React = React; // enable debugger
