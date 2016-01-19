@@ -34,16 +34,16 @@ global.__DEBUG_NEW_WINDOW__ = false;
 
 const port = config.server_port;
 
-const app = require('./../server/app');
+const app = require('./../src/server/app');
 // https://github.com/halt-hammerzeit/webpack-isomorphic-tools
 var WebpackIsomorphicTools = require('webpack-isomorphic-tools');
-global.webpackIsomorphicTools = new WebpackIsomorphicTools(require('../server/webpack-isomorphic-tools.config.js'))
+global.webpackIsomorphicTools = new WebpackIsomorphicTools(require('../src/server/webpack-isomorphic-tools.config.js'))
   .development(config.env.development);
 
 global.webpackIsomorphicTools
   .server(config.path_base, function() {
     debug('will start server');
-    app.use(require('./../server/render'));
+    app.use(require('./../src/server/render'));
     app.listen(port);
     debug('Server is now running at localhost:' + port + '.');
   });

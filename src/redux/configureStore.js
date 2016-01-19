@@ -21,12 +21,6 @@ function withDevTools(middlewares) {
   return compose(middlewares, devTools);
 }
 
-// context: https://github.com/rackt/redux-simple-router/compare/1.0.2...2.0.2
-// context: https://github.com/rackt/redux-simple-router/pull/141#issuecomment-167587581
-// function linkDevtoolsToRouter(routerMiddleware, store) {
-//   routerMiddleware.listenForReplays(store);
-// }
-
 /**
  * https://github.com/bdefore/universal-redux/blob/master/src/shared/create.js
  *
@@ -37,17 +31,6 @@ function withDevTools(middlewares) {
  */
 export default function configureStore(history, initialState) {
   const routerMiddleware = syncHistory(history);
-  // const defaultMiddlewares = [router];
-  // backward compatibility to 2.x api expecting object for middleware instead of array:
-  // const customMiddlewares = !providedMiddlewares.concat ? map(providedMiddlewares, (m) => {
-  //   return m;
-  // }) : providedMiddlewares;
-  // const middlewares = customMiddlewares.concat(defaultMiddlewares);
-  // if (__CLIENT__ && __LOGGER__) {
-  //   middlewares.push(createLogger({
-  //     collapsed: true
-  //   }));
-  // }
   const useDevtools = __DEV__ && __CLIENT__ && __DEBUG__;
   // Compose final middleware and use devtools in debug environment
   var middleware = applyMiddleware(thunk, routerMiddleware);
@@ -56,10 +39,6 @@ export default function configureStore(history, initialState) {
   }
 
   const store = middleware(createStore)(rootReducer, initialState);
-  // const store = finalCreateStore(rootReducer, initialState);
-  if (__DEBUG__) {
-    // linkDevtoolsToRouter(router, store);
-  }
   hmr(store);
   return store;
 }

@@ -12,9 +12,9 @@ const config = {
   // ----------------------------------
   path_base  : path.resolve(__dirname, '../'),
   dir_src    : 'src',
-  dir_client : 'client',
+  dir_client : 'src/client',
   dir_dist   : 'dist',
-  dir_server : 'server',
+  dir_server : 'src/server',
   dir_test   : 'tests',
 
   // ----------------------------------

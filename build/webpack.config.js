@@ -3,13 +3,12 @@ import cssnano from 'cssnano';
 import _debug from 'debug';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin';
-import writeStats from './plugins/write_stats';
 import config from '../config';
 
 const debug = _debug('app:webpack:config');
 const paths = config.utils_paths;
 const {__DEV__, __PROD__, __TEST__} = config.globals;
-const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('./../server/webpack-isomorphic-tools.config.js'));
+const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('./../src/server/webpack-isomorphic-tools.config.js'));
 
 debug('context', config.path_base);
 const webpackConfig = {
@@ -225,12 +224,6 @@ if (!__DEV__) {
     })
   );
 }
-
-// webpackConfig.plugins.push(
-//   function() {
-//     this.plugin('done', writeStats);
-//   }
-// );
 
 webpackConfig.plugins.push(webpackIsomorphicToolsPlugin.development());
 

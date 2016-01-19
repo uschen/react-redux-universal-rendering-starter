@@ -1,9 +1,9 @@
 import Express from 'express';
 import _debug from 'debug';
-import config from '../config';
+import config from '../../config';
 
 import webpack from 'webpack';
-import webpackConfig from '../build/webpack.config';
+import webpackConfig from '../../build/webpack.config';
 
 const debug = _debug('app:server');
 
