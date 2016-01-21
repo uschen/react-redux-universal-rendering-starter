@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import rootReducer from './rootReducer';
 import { applyMiddleware, compose, createStore } from 'redux';
 import { syncHistory } from 'redux-simple-router';
+import fetchrMiddleware from './middlewares/fetchrMiddleware';
 // import createLogger from 'redux-logger';
 
 function hmr(store) {
@@ -33,7 +34,7 @@ export default function configureStore(history, initialState) {
   const routerMiddleware = syncHistory(history);
   const useDevtools = __DEV__ && __CLIENT__ && __DEBUG__;
   // Compose final middleware and use devtools in debug environment
-  var middleware = applyMiddleware(thunk, routerMiddleware);
+  var middleware = applyMiddleware(thunk, routerMiddleware, fetchrMiddleware());
   if (useDevtools) {
     middleware = withDevTools(middleware);
   }

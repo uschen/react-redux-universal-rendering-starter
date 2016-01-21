@@ -13,7 +13,7 @@ export const COUNTER_DECREMENT = 'COUNTER_DECREMENT';
 // ------------------------------------
 // Actions
 // ------------------------------------
-export const increment = createAction(COUNTER_INCREMENT, (value = 1) => value);
+export const increment = createAction(COUNTER_INCREMENT, (value = 1) => value, () => ({isDemo: true}));
 export const set = createAction(COUNTER_SET, (value) => value);
 export const decrement = createAction(COUNTER_DECREMENT, (value = 1) => value);
 

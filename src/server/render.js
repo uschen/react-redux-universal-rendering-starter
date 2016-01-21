@@ -12,6 +12,7 @@ import { Provider } from 'react-redux';
 import routes from './../routes';
 const pretty = new PrettyError();
 const tools = getTools();
+const debug = _debug('app:server:render');
 
 export default function handleRender(req, res) {
   if (config.env === 'development') {
@@ -21,12 +22,13 @@ export default function handleRender(req, res) {
   const store = configureStore(
     history
   );
+  debug('location', req.originalUrl);
   match({
     history,
     routes,
     location: req.originalUrl
   }, (error, redirectLocation, renderProps) => {
-
+    debug('renderProps', renderProps);
     if (redirectLocation) {
       res.redirect(redirectLocation.pathname + redirectLocation.search);
     } else if (error) {

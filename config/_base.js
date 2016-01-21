@@ -79,7 +79,8 @@ config.globals = {
   '__CLIENT__'   : true,
   '__DEBUG_NEW_WINDOW__' : !!argv.nw,
   '__BASENAME__' : JSON.stringify(process.env.BASENAME || ''),
-  '__LOGGER__'   : false
+  '__LOGGER__'   : false,
+  'DEBUG'        : 'app:*'
 };
 
 // ------------------------------------

@@ -1,9 +1,11 @@
+localStorage.debug = 'app:*';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 import routes from './../routes';
 import configureStore from '../redux/configureStore';
+
 // import App from '../src/containers/App';
 const initialState = window.__INITIAL_STATE__;
 const destEle = document.getElementById('content');

@@ -1,7 +1,8 @@
 import Express from 'express';
 import _debug from 'debug';
 import config from '../../config';
-
+import Fetcher from 'fetchr';
+import bodyParser from 'body-parser';
 import webpack from 'webpack';
 import webpackConfig from '../../build/webpack.config';
 
@@ -9,6 +10,8 @@ const debug = _debug('app:server');
 
 const paths = config.utils_paths;
 const app = new Express();
+
+app.use('/api', [bodyParser.json(), Fetcher.middleware()]);
 
 if (config.env === 'development') {
   const compiler = webpack(webpackConfig);

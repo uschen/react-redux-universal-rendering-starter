@@ -29,7 +29,6 @@ global.__CLIENT__ = false;
 global.__SERVER__ = true;
 global.__DEBUG__ = config.globals.__DEBUG__;
 global.__DISABLE_SSR__ = false; // <----- DISABLES SERVER SIDE RENDERING FOR ERROR DEBUGGING
-global.__DEVELOPMENT__ = process.env.NODE_ENV !== 'production';
 global.__DEBUG_NEW_WINDOW__ = false;
 
 const port = config.server_port;
@@ -38,7 +37,7 @@ const app = require('./../src/server/app');
 // https://github.com/halt-hammerzeit/webpack-isomorphic-tools
 var WebpackIsomorphicTools = require('webpack-isomorphic-tools');
 global.webpackIsomorphicTools = new WebpackIsomorphicTools(require('../src/server/webpack-isomorphic-tools.config.js'))
-  .development(config.env.development);
+  .development(__DEV__);
 
 global.webpackIsomorphicTools
   .server(config.path_base, function() {
@@ -47,4 +46,3 @@ global.webpackIsomorphicTools
     app.listen(port);
     debug('Server is now running at localhost:' + port + '.');
   });
-// require('../server').listen(port);
