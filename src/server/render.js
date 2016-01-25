@@ -10,6 +10,8 @@ import { createMemoryHistory, match, RouterContext } from 'react-router';
 import PrettyError from 'pretty-error';
 import { Provider } from 'react-redux';
 import routes from './../routes';
+import {createForServer} from './../helpers/rootComponent';
+
 const pretty = new PrettyError();
 const tools = getTools();
 const debug = _debug('app:server:render');
@@ -35,17 +37,17 @@ export default function handleRender(req, res) {
       console.error('ROUTER ERROR:', pretty.render(error));
       res.status(500);
     } else if (renderProps) {
-      const component = (
-      <Provider store={store} key='provider'>
-            <RouterContext {...renderProps} />
-          </Provider>
-      );
-      const status = getStatusFromRoutes(renderProps.routes);
-      if (status) {
-        res.status(status);
-      }
-      res.send('<!doctype html>\n' +
-        renderToString(<Html assets={tools.assets()} component={component} store={store}/>));
+      // rootComponent
+      debug('got renderProps');
+      createForServer(store, renderProps)
+        .then(function({root}) {
+          const status = getStatusFromRoutes(renderProps.routes);
+          if (status) {
+            res.status(status);
+          }
+          res.send('<!doctype html>\n' +
+            renderToString(<Html assets={tools.assets()} component={root} store={store}/>));
+        });
 
     } else {
       res.status(404).send('Not found');

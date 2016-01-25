@@ -10,12 +10,12 @@ const initialState = new Map();
 // Constants
 // ------------------------------------
 export const TODO_ADD = 'ADD_TODO';
-export const TODO_DELETE = 'TODO_DELETE';
-export const TODO_EDIT = 'TODO_EDIT';
-export const TODO_COMPLETE = 'TODO_COMPLETE';
-export const TODO_COMPLETE_ALL = 'TODO_COMPLETE_ALL';
-export const TODO_CLEAR_COMPLETED = 'TODO_CLEAR_COMPLETED';
 export const TODO_LIST = 'TODO_LIST';
+// export const TODO_DELETE = 'TODO_DELETE';
+// export const TODO_EDIT = 'TODO_EDIT';
+// export const TODO_COMPLETE = 'TODO_COMPLETE';
+// export const TODO_COMPLETE_ALL = 'TODO_COMPLETE_ALL';
+// export const TODO_CLEAR_COMPLETED = 'TODO_CLEAR_COMPLETED';
 
 // ------------------------------------
 // Actions
@@ -37,11 +37,11 @@ export const list = createAction(TODO_LIST, (value) => value, () => {
     }
   };
 });
-export const remove = createAction(TODO_DELETE);
-export const edit = createAction(TODO_EDIT);
-export const complete = createAction(TODO_COMPLETE);
-export const completeAll = createAction(TODO_COMPLETE_ALL);
-export const clearCompleted = createAction(TODO_CLEAR_COMPLETED);
+// export const remove = createAction(TODO_DELETE);
+// export const edit = createAction(TODO_EDIT);
+// export const complete = createAction(TODO_COMPLETE);
+// export const completeAll = createAction(TODO_COMPLETE_ALL);
+// export const clearCompleted = createAction(TODO_CLEAR_COMPLETED);
 
 export const addAsync = (text) => {
   return (dispatch, getState) => {
