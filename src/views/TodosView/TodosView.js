@@ -16,8 +16,17 @@ const mapStateToProps = (state) => ({
 
 export class TodosView extends Component {
   static propTypes = {
-    todos: PropTypes.array.isRequired
+    todos: PropTypes.array.isRequired,
+    list: PropTypes.func.isRequired
   };
+
+  static reduxAsyncConnect(params, store) {
+    const {dispatch, getState} = store;
+    const promises = [];
+    promises.push(dispatch(todosActions.list()));
+    return Promise.all(promises);
+  }
+
   render() {
     return (
       <div className='container text-center'>

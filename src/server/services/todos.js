@@ -3,6 +3,10 @@
  */
 import _ from 'lodash';
 import uuid from 'node-uuid';
+import _debug from 'debug';
+
+const debug = debug('app:server:services:todos');
+
 const todos = [{
   id: uuid.v1(),
   test: 'server default todo'
@@ -18,6 +22,7 @@ function createCounter() {
 export default {
   name: 'todos',
   read(req, resource, {id, limit, max_id}, config, done) {
+    debug('read', id, limit, max_id);
     if (!id) {
       return done(null, {
         data: todos

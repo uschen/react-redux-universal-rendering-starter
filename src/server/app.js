@@ -1,17 +1,19 @@
 import Express from 'express';
 import _debug from 'debug';
 import config from '../../config';
-import Fetcher from 'fetchr';
+import Fetchr from 'fetchr';
 import bodyParser from 'body-parser';
 import webpack from 'webpack';
 import webpackConfig from '../../build/webpack.config';
+import todosService from './services/todos';
 
+Fetchr.registerService(todosService);
 const debug = _debug('app:server');
 
 const paths = config.utils_paths;
 const app = new Express();
 
-app.use('/api', [bodyParser.json(), Fetcher.middleware()]);
+app.use('/api', [bodyParser.json(), Fetchr.middleware()]);
 
 if (config.env === 'development') {
   const compiler = webpack(webpackConfig);
