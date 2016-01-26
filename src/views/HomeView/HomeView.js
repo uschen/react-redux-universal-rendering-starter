@@ -51,6 +51,7 @@ export class HomeView extends Component {
         </button>
         <hr />
         <Link to='/404'>Go to 404 Page</Link>
+        <Link to='/todos'>Go to TODO Page</Link>
       </div>
     );
   }

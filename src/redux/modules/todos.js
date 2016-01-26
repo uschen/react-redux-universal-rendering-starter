@@ -5,7 +5,7 @@ import uuid from 'node-uuid';
 
 const debug = _debug('app:redux:modules:todos');
 
-const initialState = new Map();
+const initialState = [];
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -52,11 +52,18 @@ export const addAsync = (text) => {
     .end(function(err, data, meta) {
       return dispatch(add(err));
     });
-    setTimeout(() => {
-      dispatch(increment(getState().counter));
-    }, 1000);
   };
 };
 
-export const set = createAction(COUNTER_SET, (value) => value);
-export const decrement = createAction(COUNTER_DECREMENT, (value = 1) => value);
+export const actions = {
+  add,
+  list
+};
+
+// ------------------------------------
+// Reducer
+// ------------------------------------
+export default handleActions({
+  [TODO_LIST]: (state, {payload}) => state,
+  [TODO_ADD]: (state, {payload}) => state.push(payload)
+}, initialState);

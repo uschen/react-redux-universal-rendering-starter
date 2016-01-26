@@ -8,7 +8,7 @@ import Html from './../helpers/Html';
 import configureStore from '../redux/configureStore';
 import { createMemoryHistory, match, RouterContext } from 'react-router';
 import PrettyError from 'pretty-error';
-import { Provider } from 'react-redux';
+// import { Provider } from 'react-redux';
 import routes from './../routes';
 import {createForServer} from './../helpers/rootComponent';
 
@@ -30,7 +30,6 @@ export default function handleRender(req, res) {
     routes,
     location: req.originalUrl
   }, (error, redirectLocation, renderProps) => {
-    debug('renderProps', renderProps);
     if (redirectLocation) {
       res.redirect(redirectLocation.pathname + redirectLocation.search);
     } else if (error) {

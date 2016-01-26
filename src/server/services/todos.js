@@ -3,7 +3,10 @@
  */
 import _ from 'lodash';
 import uuid from 'node-uuid';
-const todos = [];
+const todos = [{
+  id: uuid.v1(),
+  test: 'server default todo'
+}];
 
 function createCounter() {
   return {
