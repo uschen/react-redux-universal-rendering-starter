@@ -12,21 +12,40 @@ export default function fetchrMiddleware(fetchrInstance) {
         debug('no meta or meta.fetchr');
         return next(action);
       }
+      if (meta.fetchr.loaded) {
+        debug('meta.fetchr.loaded', type, payload);
+        return next(action);
+      }
+
       let fetchr = meta.fetchr;
       const {service, method, params, body, config} = fetchr;
       debug('meta.fetchr', fetchr);
-      fetchrInstance[method](service)
+      let fetchrService = fetchrInstance[method](service);
+      let promise = fetchrService
         .params(params || {})
         .body(body || {})
         .clientConfig(config || {})
-        .end((err, res) => {
-          if (err) {
-            debug('err', err);
-            return dispatch({...action, payload: err, error: true});
-          }
-          debug('res', res);
-          dispatch({...action, payload: res.body});
+        .end()
+        .then(function(res) {
+          debug('fetchr', 'res', res);
+          return res.data.data;
         });
+      debug('send to next');
+      next({...action, payload: promise, meta: Object.assign({}, meta, {fetchr: Object.assign({}, meta.fetchr, {loaded: true})})});
+      return promise;
+      // return
+
+      //   .then(function (res) {
+      //     debug('res', res);
+      //     action.meta.fetchr.loaded = true;
+      //     let newDispatch = {...action, payload: res.data};
+      //     debug('fetchr', 'res', 'newDispatch', newDispatch);
+      //     dispatch(newDispatch);
+      //   })
+      //   .catch(function (err) {
+      //     debug('err', err);
+      //     return dispatch({...action, payload: err, error: true});
+      //   });
     };
   };
 }

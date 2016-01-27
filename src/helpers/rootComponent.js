@@ -16,6 +16,7 @@ export function createForServer(store, renderProps) {
               <ReduxAsyncConnect {...renderProps} />
           </Provider>
         );
+        debug('createForServer', 'got root', 'store', store.getState());
         resolve({ root });
       })
       .catch((err) => {

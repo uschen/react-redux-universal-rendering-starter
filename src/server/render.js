@@ -40,6 +40,7 @@ export default function handleRender(req, res) {
       debug('got renderProps');
       createForServer(store, renderProps)
         .then(function({root}) {
+          debug('got root', 'state', store.getState());
           const status = getStatusFromRoutes(renderProps.routes);
           if (status) {
             res.status(status);

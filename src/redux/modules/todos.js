@@ -5,7 +5,10 @@ import uuid from 'node-uuid';
 
 const debug = _debug('app:redux:modules:todos');
 
-const initialState = [];
+const initialState = {
+  items: [],
+  isLoaded: false
+};
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -43,18 +46,6 @@ export const list = createAction(TODO_LIST, (value) => value, () => {
 // export const completeAll = createAction(TODO_COMPLETE_ALL);
 // export const clearCompleted = createAction(TODO_CLEAR_COMPLETED);
 
-export const addAsync = (text) => {
-  return (dispatch, getState) => {
-    debug('doubleAsync');
-    fetchr
-    .create('todos')
-    .body({text: text})
-    .end(function(err, data, meta) {
-      return dispatch(add(err));
-    });
-  };
-};
-
 export const actions = {
   add,
   list
@@ -64,6 +55,14 @@ export const actions = {
 // Reducer
 // ------------------------------------
 export default handleActions({
-  [TODO_LIST]: (state, {payload}) => state,
-  [TODO_ADD]: (state, {payload}) => state.push(payload)
+  [TODO_LIST]: (state, {payload}) => {
+    debug('TODO_LIST', state, 'payload', payload);
+    state.isLoaded = true;
+    state.items = payload;
+    debug('TODO_LIST', 'new state', state);
+    return state;
+  },
+  [TODO_ADD]: (state, {payload}) => {
+    state.items.push(payload);
+  }
 }, initialState);

@@ -5,7 +5,7 @@ import _ from 'lodash';
 import uuid from 'node-uuid';
 import _debug from 'debug';
 
-const debug = debug('app:server:services:todos');
+const debug = _debug('app:server:services:todos');
 
 const todos = [{
   id: uuid.v1(),
